@@ -19,7 +19,7 @@ Sample 2
 Sample 3
 
 <p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/w82VCcW3PaKDu8zsir/giphy.gif">
+  <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
 </p>
 
 ## Getting started
