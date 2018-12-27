@@ -8,6 +8,8 @@ Sample 1
 
 <p align="center">
   <img width="300" height="600" src="https://media.giphy.com/media/1hBwHq01CeFJOgJg8p/giphy.gif">
+  <img width="300" height="600" src="https://media.giphy.com/media/f9SzoZKqo1vfdlCaT5/giphy.gif">
+  <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
 </p>
 
 Sample 2
@@ -19,7 +21,7 @@ Sample 2
 Sample 3
 
 <p align="center">
-  <img src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
+  <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
 </p>
 
 ## Getting started
