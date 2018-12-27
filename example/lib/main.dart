@@ -1,48 +1,65 @@
-# Stretchy Header
-
-[![pub package](https://img.shields.io/pub/v/stretchy_header.svg)](https://pub.dartlang.org/packages/stretchy_header)
-
-This package allows us to create a elastic header, to give a good effect when you scroll down the widget.
-
-Sample 1
-
-<p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/1hBwHq01CeFJOgJg8p/giphy.gif">
-</p>
-
-Sample 2
-
-<p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/f9SzoZKqo1vfdlCaT5/giphy.gif">
-</p>
-
-Sample 3
-
-<p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/w82VCcW3PaKDu8zsir/giphy.gif">
-</p>
-
-## Getting started
-
-You should ensure that you add the router as a dependency in your flutter project.
-```yaml
-dependencies:
-  stretchy_header: "^1.0.0"
-```
-
-You should then run `flutter packages upgrade` or update your packages in IntelliJ.
-
-## Example Project
-
-There is an example project in the `example` folder. Check it out. Otherwise, keep reading to get up and running.
-
-## Usage
-
-### Sample 1
-
-```dart
+import 'package:example/long_description.dart';
 import 'package:flutter/material.dart';
 import 'package:stretchy_header/stretchy_header.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Stretchy',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Samples(),
+    );
+  }
+}
+
+class Samples extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SampleStretchy1(),
+                ));
+              },
+              child: Text("Sample 1"),
+              color: Colors.red,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SampleStretchy2(),
+                ));
+              },
+              child: Text("Sample 2"),
+              color: Colors.red,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SampleStretchy3(),
+                ));
+              },
+              child: Text("Sample 3"),
+              color: Colors.red,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class SampleStretchy1 extends StatelessWidget {
   @override
@@ -69,14 +86,6 @@ class SampleStretchy1 extends StatelessWidget {
     );
   }
 }
-```
-
-### Sample 2
-
-```dart
-
-import 'package:flutter/material.dart';
-import 'package:stretchy_header/stretchy_header.dart';
 
 class SampleStretchy2 extends StatelessWidget {
   @override
@@ -106,15 +115,6 @@ class SampleStretchy2 extends StatelessWidget {
     );
   }
 }
-```
-
-### Sample 3 
-If you want to put a footer widget in your header that always will be visible, use headerFooter
-
-```dart
-
-import 'package:flutter/material.dart';
-import 'package:stretchy_header/stretchy_header.dart';
 
 class SampleStretchy3 extends StatelessWidget {
   @override
@@ -151,13 +151,9 @@ class SampleStretchy3 extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Text("Long text here"),
+          child: Text(LONG_DESCRIPTION),
         ),
       ),
     );
   }
 }
-
-```
-
-You can follow me on twitter [@diegoveloper](https://www.twitter.com/diegoveloper)
