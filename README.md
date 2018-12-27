@@ -19,7 +19,7 @@ Sample 2
 Sample 3
 
 <p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
+  <iframe src="https://giphy.com/embed/1NUOenNf2oKU3YuWb1" width="246" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/1NUOenNf2oKU3YuWb1">via GIPHY</a></p>
 </p>
 
 ## Getting started
