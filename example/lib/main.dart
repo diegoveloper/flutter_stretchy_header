@@ -53,6 +53,15 @@ class Samples extends StatelessWidget {
               },
               child: Text("Sample 3"),
               color: Colors.red,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SampleStretchy4(),
+                ));
+              },
+              child: Text("Sample 4"),
+              color: Colors.red,
             )
           ],
         ),
@@ -146,6 +155,38 @@ class SampleStretchy3 extends StatelessWidget {
             child: Text(
               "Machu Picchu",
               style: TextStyle(color: Colors.white, fontSize: 22.0),
+            ),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(LONG_DESCRIPTION),
+        ),
+      ),
+    );
+  }
+}
+
+class SampleStretchy4 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StretchyHeader(
+        headerHeight: 250.0,
+        header: Image.asset(
+          "images/machu.jpg",
+          fit: BoxFit.cover,
+        ),
+        highlightHeaderAlignment: HighlightHeaderAlignment.center,
+        highlightHeader: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: GestureDetector(
+            onTap: () {
+              print("tap item");
+            },
+            child: CircleAvatar(
+              backgroundColor: Colors.red,
+              child: Text("M"),
             ),
           ),
         ),

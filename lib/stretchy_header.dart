@@ -116,13 +116,6 @@ class _StretchyHeaderState extends State<StretchyHeader> {
               ),
             ),
           ),
-          widget.highlightHeader != null
-              ? Positioned(
-                  key: _keyHighlightHeader,
-                  top: highlightPosition,
-                  child: widget.highlightHeader,
-                )
-              : SizedBox.shrink(),
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
               if (notification is ScrollUpdateNotification) {
@@ -144,7 +137,14 @@ class _StretchyHeaderState extends State<StretchyHeader> {
                     child: widget.body,
                   ),
                 ]),
-          )
+          ),
+          widget.highlightHeader != null
+              ? Positioned(
+                  key: _keyHighlightHeader,
+                  top: highlightPosition,
+                  child: widget.highlightHeader,
+                )
+              : SizedBox.shrink(),
         ],
       ),
     );

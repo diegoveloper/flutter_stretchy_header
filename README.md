@@ -20,7 +20,7 @@ Sample 3
 
 <p align="center">
   <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
-  Img url: https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif
+  <br>https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif
 </p>
 
 ## Getting started
@@ -28,7 +28,7 @@ Sample 3
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  stretchy_header: "^1.0.0"
+  stretchy_header: "^1.0.1"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.
