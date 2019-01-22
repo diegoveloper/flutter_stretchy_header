@@ -173,16 +173,21 @@ class SampleStretchy4 extends StatelessWidget {
     return Scaffold(
       body: StretchyHeader(
         headerHeight: 250.0,
-        header: Image.asset(
-          "images/machu.jpg",
-          fit: BoxFit.cover,
+        header: GestureDetector(
+          onTap: () {
+            print("tap header");
+          },
+          child: Image.asset(
+            "images/machu.jpg",
+            fit: BoxFit.cover,
+          ),
         ),
         highlightHeaderAlignment: HighlightHeaderAlignment.center,
         highlightHeader: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: GestureDetector(
             onTap: () {
-              print("tap item");
+              print("tap highlightHeader");
             },
             child: CircleAvatar(
               backgroundColor: Colors.red,

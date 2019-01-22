@@ -92,30 +92,6 @@ class _StretchyHeaderState extends State<StretchyHeader> {
       color: widget.backgroundColor,
       child: Stack(
         children: <Widget>[
-          SizedBox(
-            child: ClipRect(
-              clipper: HeaderClipper(_headerSize - _offset),
-              child: widget.header,
-            ),
-            height: _scrollController.hasClients &&
-                    _scrollController.position.extentAfter == 0.0
-                ? _headerSize
-                : _offset <= _headerSize ? _headerSize - _offset : 0.0,
-            width: MediaQuery.of(context).size.width,
-          ),
-          ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                  sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
-                  sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
-              child: Container(
-                height: _offset <= _headerSize ? _headerSize - _offset : 0.0,
-                decoration: BoxDecoration(
-                    color: (widget.blurColor ?? Colors.grey.shade200)
-                        .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
-              ),
-            ),
-          ),
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
               if (notification is ScrollUpdateNotification) {
@@ -137,6 +113,32 @@ class _StretchyHeaderState extends State<StretchyHeader> {
                     child: widget.body,
                   ),
                 ]),
+          ),
+          SizedBox(
+            child: ClipRect(
+              clipper: HeaderClipper(_headerSize - _offset),
+              child: widget.header,
+            ),
+            height: _scrollController.hasClients &&
+                    _scrollController.position.extentAfter == 0.0
+                ? _headerSize
+                : _offset <= _headerSize ? _headerSize - _offset : 0.0,
+            width: MediaQuery.of(context).size.width,
+          ),
+          IgnorePointer(
+            child: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                    sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
+                    sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
+                child: Container(
+                  height: _offset <= _headerSize ? _headerSize - _offset : 0.0,
+                  decoration: BoxDecoration(
+                      color: (widget.blurColor ?? Colors.grey.shade200)
+                          .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
+                ),
+              ),
+            ),
           ),
           widget.highlightHeader != null
               ? Positioned(
