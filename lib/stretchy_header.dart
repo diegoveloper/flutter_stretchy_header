@@ -92,28 +92,6 @@ class _StretchyHeaderState extends State<StretchyHeader> {
       color: widget.backgroundColor,
       child: Stack(
         children: <Widget>[
-          NotificationListener<ScrollNotification>(
-            onNotification: (notification) {
-              if (notification is ScrollUpdateNotification) {
-                setState(() {
-                  _offset = notification.metrics.pixels;
-                });
-              }
-            },
-            child: ListView(
-                controller: _scrollController,
-                padding: EdgeInsets.zero,
-                physics: BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                children: [
-                  SizedBox(
-                    height: _headerSize,
-                  ),
-                  AbsorbPointer(
-                    child: widget.body,
-                  ),
-                ]),
-          ),
           SizedBox(
             child: ClipRect(
               clipper: HeaderClipper(_headerSize - _offset),
@@ -139,6 +117,28 @@ class _StretchyHeaderState extends State<StretchyHeader> {
                 ),
               ),
             ),
+          ),
+          NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollUpdateNotification) {
+                setState(() {
+                  _offset = notification.metrics.pixels;
+                });
+              }
+            },
+            child: ListView(
+                controller: _scrollController,
+                padding: EdgeInsets.zero,
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                children: [
+                  SizedBox(
+                    height: _headerSize,
+                  ),
+                  AbsorbPointer(
+                    child: widget.body,
+                  ),
+                ]),
           ),
           widget.highlightHeader != null
               ? Positioned(
