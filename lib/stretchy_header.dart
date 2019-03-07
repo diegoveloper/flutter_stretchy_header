@@ -30,12 +30,16 @@ class StretchyHeader extends StatefulWidget {
   ///Background Color of all of the content
   final Color backgroundColor;
 
+  ///If you want to blur the content when scroll. True by default
+  final bool blurContent;
+
   const StretchyHeader({
     Key key,
     @required this.header,
     @required this.body,
     @required this.headerHeight,
     this.highlightHeader,
+    this.blurContent = true,
     this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
     this.blurColor,
     this.backgroundColor,
@@ -104,19 +108,23 @@ class _StretchyHeaderState extends State<StretchyHeader> {
             width: MediaQuery.of(context).size.width,
           ),
           IgnorePointer(
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                    sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
-                    sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
-                child: Container(
-                  height: _offset <= _headerSize ? _headerSize - _offset : 0.0,
-                  decoration: BoxDecoration(
-                      color: (widget.blurColor ?? Colors.grey.shade200)
-                          .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
-                ),
-              ),
-            ),
+            child: widget.blurContent
+                ? ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
+                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
+                      child: Container(
+                        height: _offset <= _headerSize
+                            ? _headerSize - _offset
+                            : 0.0,
+                        decoration: BoxDecoration(
+                            color: (widget.blurColor ?? Colors.grey.shade200)
+                                .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
+                      ),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ),
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
