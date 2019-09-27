@@ -62,7 +62,16 @@ class Samples extends StatelessWidget {
               },
               child: Text("Sample 4"),
               color: Colors.red,
-            )
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ListViewWithoutSafeArea(),
+                ));
+              },
+              child: Text("ListView without SafeArea"),
+              color: Colors.red,
+            ),
           ],
         ),
       ),
@@ -193,6 +202,36 @@ class SampleStretchy4 extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Text(LONG_DESCRIPTION),
+        ),
+      ),
+    );
+  }
+}
+
+class ListViewWithoutSafeArea extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StretchyHeader(
+        headerHeight: 250.0,
+        header: Image.asset(
+          "images/chichen.jpg",
+          fit: BoxFit.cover,
+        ),
+        body: ListView.builder(
+          itemCount: 15,
+          shrinkWrap: true,
+          padding: EdgeInsets.zero, // to avoid space above ListView
+          itemBuilder: (context, index) {
+            return Container(
+              color: index % 2 == 0
+                  ? Colors.green[100]
+                  : Colors.yellow[50],
+              child: ListTile(
+                title: Text("item $index"),
+              ),
+            );
+          },
         ),
       ),
     );
