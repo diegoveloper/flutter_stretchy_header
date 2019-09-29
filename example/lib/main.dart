@@ -72,6 +72,15 @@ class Samples extends StatelessWidget {
               child: Text("ListView without SafeArea"),
               color: Colors.red,
             ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TapListView(),
+                ));
+              },
+              child: Text("ListView with tappable items"),
+              color: Colors.red,
+            ),
           ],
         ),
       ),
@@ -233,6 +242,38 @@ class ListViewWithoutSafeArea extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class TapListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tap items'),
+      ),
+      body: StretchyHeader.listViewBuilder(
+        headerData: HeaderData(
+          headerHeight: 250.0,
+          header: Image.asset(
+            "images/chichen.jpg",
+            fit: BoxFit.cover,
+          ),
+        ),
+        itemCount: 15,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text("item $index"),
+            onTap: () {
+              final snackBar = SnackBar(
+                content: Text('item $index tapped'),
+              );
+              Scaffold.of(context).showSnackBar(snackBar);
+            },
+          );
+        },
       ),
     );
   }
