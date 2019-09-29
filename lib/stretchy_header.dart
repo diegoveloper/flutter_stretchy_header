@@ -75,10 +75,7 @@ class StretchyHeader extends StretchyHeaderBase {
             controller: controller,
             padding: EdgeInsets.zero,
             physics: physics,
-            children: <Widget>[
-              topWidget,
-              ...children,
-            ],
+            children: <Widget>[topWidget].followedBy(children).toList(),
           );
         },
       );
@@ -260,6 +257,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                   _offset = notification.metrics.pixels;
                 });
               }
+              return false;
             },
             child: widget.listBuilder(
               context,
