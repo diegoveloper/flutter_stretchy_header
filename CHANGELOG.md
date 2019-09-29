@@ -1,3 +1,7 @@
+## [1.0.5]
+
+* Get rid of nested ListViews, allow list items to consume gestures
+
 ## [1.0.4]
 
 * New option to avoid blur the content when scroll. blurContent = false

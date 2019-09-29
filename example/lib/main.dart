@@ -30,46 +30,37 @@ class Samples extends StatelessWidget {
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SampleStretchy1(),
+                  builder: (context) => SampleListView(),
                 ));
               },
-              child: Text("Sample 1"),
+              child: Text("ListView"),
               color: Colors.red,
             ),
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SampleStretchy2(),
+                  builder: (context) => SampleCustomHeader(),
                 ));
               },
-              child: Text("Sample 2"),
+              child: Text("Cutom header"),
               color: Colors.red,
             ),
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SampleStretchy3(),
+                  builder: (context) => SampleBottomLabel(),
                 ));
               },
-              child: Text("Sample 3"),
+              child: Text("Bottom label"),
               color: Colors.red,
             ),
             MaterialButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SampleStretchy4(),
+                  builder: (context) => SampleCenterWidget(),
                 ));
               },
-              child: Text("Sample 4"),
-              color: Colors.red,
-            ),
-            MaterialButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ListViewWithoutSafeArea(),
-                ));
-              },
-              child: Text("ListView without SafeArea"),
+              child: Text("Center widget"),
               color: Colors.red,
             ),
           ],
@@ -79,54 +70,59 @@ class Samples extends StatelessWidget {
   }
 }
 
-class SampleStretchy1 extends StatelessWidget {
+class SampleListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: StretchyHeader(
-          headerHeight: 250.0,
+    return Scaffold(
+      body: StretchyHeader.listViewBuilder(
+        headerData: HeaderData(
+          headerHeight: 250,
           header: Image.asset(
             "images/chichen.jpg",
             fit: BoxFit.cover,
           ),
-          body: ListView.builder(
-            itemCount: 15,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("item $index"),
-              );
-            },
-          ),
         ),
+        itemCount: 15,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text("item $index"),
+            onTap: () {
+              final snackBar = SnackBar(
+                content: Text('item $index tapped'),
+              );
+              Scaffold.of(context).showSnackBar(snackBar);
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class SampleStretchy2 extends StatelessWidget {
+class SampleCustomHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 200.0,
-        backgroundColor: Colors.black54,
-        blurColor: Colors.yellow,
-        header: UserAccountsDrawerHeader(
-          accountName: Text("Diego"),
-          accountEmail: Text("twitter @diegoveloper"),
-          currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.red,
-            child: Text("DV"),
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 200,
+          backgroundColor: Colors.black54,
+          blurColor: Colors.yellow,
+          header: UserAccountsDrawerHeader(
+            accountName: Text("Diego"),
+            accountEmail: Text("twitter @diegoveloper"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.red,
+              child: Text("DV"),
+            ),
+            margin: EdgeInsets.zero,
           ),
-          margin: EdgeInsets.zero,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
           child: Text(
             "Hello World!",
-            style: TextStyle(fontSize: 45.0, color: Colors.white),
+            style: TextStyle(fontSize: 45, color: Colors.white),
           ),
         ),
       ),
@@ -134,104 +130,78 @@ class SampleStretchy2 extends StatelessWidget {
   }
 }
 
-class SampleStretchy3 extends StatelessWidget {
+class SampleBottomLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 250.0,
-        header: Image.asset(
-          "images/machu.jpg",
-          fit: BoxFit.cover,
-        ),
-        highlightHeaderAlignment: HighlightHeaderAlignment.bottom,
-        highlightHeader: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Colors.black54,
-              Colors.black54,
-              Colors.black26,
-              Colors.black12,
-              Colors.black12,
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          )),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              "Machu Picchu",
-              style: TextStyle(color: Colors.white, fontSize: 22.0),
-            ),
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 250,
+          header: Image.asset(
+            "images/machu.jpg",
+            fit: BoxFit.cover,
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(LONG_DESCRIPTION),
-        ),
-      ),
-    );
-  }
-}
-
-class SampleStretchy4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 250.0,
-        header: Image.asset(
-          "images/machu.jpg",
-          fit: BoxFit.cover,
-        ),
-        highlightHeaderAlignment: HighlightHeaderAlignment.center,
-        highlightHeader: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: GestureDetector(
-            onTap: () {
-              print("tap highlightHeader");
-            },
-            child: CircleAvatar(
-              backgroundColor: Colors.red,
-              child: Text("M"),
-            ),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(LONG_DESCRIPTION),
-        ),
-      ),
-    );
-  }
-}
-
-class ListViewWithoutSafeArea extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 250.0,
-        header: Image.asset(
-          "images/chichen.jpg",
-          fit: BoxFit.cover,
-        ),
-        body: ListView.builder(
-          itemCount: 15,
-          shrinkWrap: true,
-          padding: EdgeInsets.zero, // to avoid space above ListView
-          itemBuilder: (context, index) {
-            return Container(
-              color: index % 2 == 0
-                  ? Colors.green[100]
-                  : Colors.yellow[50],
-              child: ListTile(
-                title: Text("item $index"),
+          highlightHeaderAlignment: HighlightHeaderAlignment.bottom,
+          highlightHeader: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black54,
+                    Colors.black54,
+                    Colors.black26,
+                    Colors.black12,
+                    Colors.black12,
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                )),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                "Machu Picchu",
+                style: TextStyle(color: Colors.white, fontSize: 22),
               ),
-            );
-          },
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Text(LONG_DESCRIPTION),
+        ),
+      ),
+    );
+  }
+}
+
+class SampleCenterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 250,
+          header: Image.asset(
+            "images/machu.jpg",
+            fit: BoxFit.cover,
+          ),
+          highlightHeaderAlignment: HighlightHeaderAlignment.center,
+          highlightHeader: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: GestureDetector(
+              onTap: () {
+                print("tap highlightHeader");
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.red,
+                child: Text("M"),
+              ),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Text(LONG_DESCRIPTION),
         ),
       ),
     );

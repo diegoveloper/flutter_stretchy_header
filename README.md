@@ -28,7 +28,7 @@ Sample 3
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  stretchy_header: "^1.0.4"
+  stretchy_header: "^1.0.5"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.
@@ -45,27 +45,30 @@ There is an example project in the `example` folder. Check it out. Otherwise, ke
 import 'package:flutter/material.dart';
 import 'package:stretchy_header/stretchy_header.dart';
 
-class SampleStretchy1 extends StatelessWidget {
+class SampleListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: StretchyHeader(
-          headerHeight: 250.0,
+    return Scaffold(
+      body: StretchyHeader.listViewBuilder(
+        headerData: HeaderData(
+          headerHeight: 250,
           header: Image.asset(
             "images/chichen.jpg",
             fit: BoxFit.cover,
           ),
-          body: ListView.builder(
-            itemCount: 15,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("item $index"),
-              );
-            },
-          ),
         ),
+        itemCount: 15,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text("item $index"),
+            onTap: () {
+              final snackBar = SnackBar(
+                content: Text('item $index tapped'),
+              );
+              Scaffold.of(context).showSnackBar(snackBar);
+            },
+          );
+        },
       ),
     );
   }
@@ -75,32 +78,33 @@ class SampleStretchy1 extends StatelessWidget {
 ### Sample 2
 
 ```dart
-
 import 'package:flutter/material.dart';
 import 'package:stretchy_header/stretchy_header.dart';
 
-class SampleStretchy2 extends StatelessWidget {
+class SampleCustomHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 200.0,
-        backgroundColor: Colors.black54,
-        blurColor: Colors.yellow,
-        header: UserAccountsDrawerHeader(
-          accountName: Text("Diego"),
-          accountEmail: Text("twitter @diegoveloper"),
-          currentAccountPicture: CircleAvatar(
-            backgroundColor: Colors.red,
-            child: Text("DV"),
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 200,
+          backgroundColor: Colors.black54,
+          blurColor: Colors.yellow,
+          header: UserAccountsDrawerHeader(
+            accountName: Text("Diego"),
+            accountEmail: Text("twitter @diegoveloper"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.red,
+              child: Text("DV"),
+            ),
+            margin: EdgeInsets.zero,
           ),
-          margin: EdgeInsets.zero,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
           child: Text(
             "Hello World!",
-            style: TextStyle(fontSize: 45.0, color: Colors.white),
+            style: TextStyle(fontSize: 45, color: Colors.white),
           ),
         ),
       ),
@@ -110,55 +114,89 @@ class SampleStretchy2 extends StatelessWidget {
 ```
 
 ### Sample 3 
-If you want to put a footer widget in your header that always will be visible, use headerFooter
 
 ```dart
-
-import 'package:flutter/material.dart';
-import 'package:stretchy_header/stretchy_header.dart';
-
-class SampleStretchy3 extends StatelessWidget {
+class SampleBottomLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StretchyHeader(
-        headerHeight: 250.0,
-        header: Image.asset(
-          "images/machu.jpg",
-          fit: BoxFit.cover,
-        ),
-        highlightHeaderAlignment: HighlightHeaderAlignment.bottom,
-        highlightHeader: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-            colors: [
-              Colors.black54,
-              Colors.black54,
-              Colors.black26,
-              Colors.black12,
-              Colors.black12,
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          )),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              "Machu Picchu",
-              style: TextStyle(color: Colors.white, fontSize: 22.0),
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 250,
+          header: Image.asset(
+            "images/machu.jpg",
+            fit: BoxFit.cover,
+          ),
+          highlightHeaderAlignment: HighlightHeaderAlignment.bottom,
+          highlightHeader: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black54,
+                    Colors.black54,
+                    Colors.black26,
+                    Colors.black12,
+                    Colors.black12,
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                )),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                "Machu Picchu",
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text("Long text here"),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Text(LONG_DESCRIPTION),
         ),
       ),
     );
   }
 }
+```
 
+### Sample 4
+
+```dart
+class SampleCenterWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StretchyHeader.singleChild(
+        headerData: HeaderData(
+          headerHeight: 250,
+          header: Image.asset(
+            "images/machu.jpg",
+            fit: BoxFit.cover,
+          ),
+          highlightHeaderAlignment: HighlightHeaderAlignment.center,
+          highlightHeader: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: GestureDetector(
+              onTap: () {
+                print("tap highlightHeader");
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.red,
+                child: Text("M"),
+              ),
+            ),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Text(LONG_DESCRIPTION),
+        ),
+      ),
+    );
+  }
+}
 ```
 
 You can follow me on twitter [@diegoveloper](https://www.twitter.com/diegoveloper)
