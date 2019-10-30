@@ -117,6 +117,28 @@ class SampleCustomHeader extends StatelessWidget {
             ),
             margin: EdgeInsets.zero,
           ),
+          overlay: Align(
+            alignment: Alignment.bottomRight,
+            child: Material(
+              color: Colors.transparent,
+              child: InkResponse(
+                onTap: () {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('onTap'),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.fullscreen,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(15),

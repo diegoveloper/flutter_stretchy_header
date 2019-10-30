@@ -13,6 +13,7 @@ Sample 1
 Sample 2
 
 <p align="center">
+  <!-- TODO update gif to show icon in `overlay` -->
   <img width="300" height="600" src="https://media.giphy.com/media/f9SzoZKqo1vfdlCaT5/giphy.gif">
 </p>
 
@@ -28,7 +29,7 @@ Sample 3
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  stretchy_header: "^1.0.5"
+  stretchy_header: "^1.0.6"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.
@@ -98,6 +99,28 @@ class SampleCustomHeader extends StatelessWidget {
               child: Text("DV"),
             ),
             margin: EdgeInsets.zero,
+          ),
+          overlay: Align(
+            alignment: Alignment.bottomRight,
+            child: Material(
+              color: Colors.transparent,
+              child: InkResponse(
+                onTap: () {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('onTap'),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.fullscreen,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
         child: Padding(

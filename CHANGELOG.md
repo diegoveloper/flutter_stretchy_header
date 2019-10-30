@@ -1,3 +1,10 @@
+## [1.0.6]
+
+Add `overlay` widget to header.
+This widget will be placed on top the header container.
+
+Can be used to add clickable items to the header bottom which doesn't prevent it from scrolling.
+
 ## [1.0.5]
 
 * Get rid of nested ListViews, allow list items to consume gestures [Thanks PiN73].
