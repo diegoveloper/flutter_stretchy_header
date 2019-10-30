@@ -122,6 +122,35 @@ class HeaderData {
   ///alignment for the highlight header
   final HighlightHeaderAlignment highlightHeaderAlignment;
 
+  ///This widget will be placed on top the header container.
+  ///Can be used to add clickable items to the header bottom
+  ///which doesn't prevent it from scrolling.
+  ///
+  ///For example:
+  ///overlay: Align(
+  //  alignment: Alignment.bottomRight,
+  //  child: Material(
+  //    color: Colors.transparent,
+  //    child: InkResponse(
+  //      onTap: () {
+  //        Scaffold.of(context).showSnackBar(
+  //          SnackBar(
+  //            content: Text('onTap'),
+  //          ),
+  //        );
+  //      },
+  //      child: Padding(
+  //        padding: EdgeInsets.all(12),
+  //        child: Icon(
+  //          Icons.fullscreen,
+  //          color: Colors.white,
+  //        ),
+  //      ),
+  //    ),
+  //  ),
+  //)
+  final Widget overlay;
+
   ///The color of the blur, white by default
   final Color blurColor;
 
@@ -137,6 +166,7 @@ class HeaderData {
     this.highlightHeader,
     this.blurContent = true,
     this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
+    this.overlay,
     this.blurColor,
     this.backgroundColor,
   })  : assert(header != null),
@@ -262,7 +292,10 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
               _scrollController,
               EdgeInsets.zero,
               BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              SizedBox(height: _headerSize),
+              SizedBox(
+                height: _headerSize,
+                child: widget.headerData.overlay,
+              ),
             ),
           ),
           widget.headerData.highlightHeader != null
