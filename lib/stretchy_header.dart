@@ -9,16 +9,19 @@ enum HighlightHeaderAlignment {
 }
 
 class StretchyHeader extends StretchyHeaderBase {
-
-  @Deprecated('Use StretchyHeader.singleChild instead. If body contains ListView, use StretchyHeader.listView or StretchyHeader.listViewBuilder.')
+  @Deprecated(
+      'Use StretchyHeader.singleChild instead. If body contains ListView, use StretchyHeader.listView or StretchyHeader.listViewBuilder.')
   factory StretchyHeader({
     Key key,
     @required Widget header,
     @required double headerHeight,
-    @required Widget body, ///Body Widget that will appear below the header
+    @required Widget body,
+
+    ///Body Widget that will appear below the header
     Widget highlightHeader,
     bool blurContent = true,
-    HighlightHeaderAlignment highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
+    HighlightHeaderAlignment highlightHeaderAlignment =
+        HighlightHeaderAlignment.bottom,
     Color blurColor,
     Color backgroundColor,
   }) {
@@ -41,76 +44,72 @@ class StretchyHeader extends StretchyHeaderBase {
     Key key,
     @required HeaderData headerData,
     @required Widget child,
-  })
-      : assert(headerData != null),
+  })  : assert(headerData != null),
         assert(child != null),
         super(
-        key: key,
-        headerData: headerData,
-        listBuilder: (context, controller, padding, physics, topWidget) {
-          return ListView(
-            controller: controller,
-            padding: EdgeInsets.zero,
-            physics: physics,
-            children: <Widget>[
-              topWidget,
-              child,
-            ],
-          );
-        },
-      );
+          key: key,
+          headerData: headerData,
+          listBuilder: (context, controller, padding, physics, topWidget) {
+            return ListView(
+              controller: controller,
+              padding: EdgeInsets.zero,
+              physics: physics,
+              children: <Widget>[
+                topWidget,
+                child,
+              ],
+            );
+          },
+        );
 
   StretchyHeader.listView({
     Key key,
     @required HeaderData headerData,
     @required List<Widget> children,
-  })
-      : assert(headerData != null),
+  })  : assert(headerData != null),
         assert(children != null),
         super(
-        key: key,
-        headerData: headerData,
-        listBuilder: (context, controller, padding, physics, topWidget) {
-          return ListView(
-            controller: controller,
-            padding: EdgeInsets.zero,
-            physics: physics,
-            children: <Widget>[topWidget].followedBy(children).toList(),
-          );
-        },
-      );
+          key: key,
+          headerData: headerData,
+          listBuilder: (context, controller, padding, physics, topWidget) {
+            return ListView(
+              controller: controller,
+              padding: EdgeInsets.zero,
+              physics: physics,
+              children: <Widget>[topWidget].followedBy(children).toList(),
+            );
+          },
+        );
 
   StretchyHeader.listViewBuilder({
     Key key,
     @required HeaderData headerData,
     @required IndexedWidgetBuilder itemBuilder,
     int itemCount,
-  })
-      : assert(headerData != null),
+  })  : assert(headerData != null),
         assert(itemBuilder != null),
         super(
-        key: key,
-        headerData: headerData,
-        listBuilder: (context, controller, padding, physics, topWidget) {
-          return ListView.builder(
-            controller: controller,
-            padding: EdgeInsets.zero,
-            physics: physics,
-            itemCount: itemCount == null ? null : itemCount + 1,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return topWidget;
-              }
-              return itemBuilder(context, index - 1);
-            },
-          );
-        },
-      );
+          key: key,
+          headerData: headerData,
+          listBuilder: (context, controller, padding, physics, topWidget) {
+            return ListView.builder(
+              controller: controller,
+              padding: EdgeInsets.zero,
+              physics: physics,
+              itemCount: itemCount == null ? null : itemCount + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return topWidget;
+                }
+                return itemBuilder(context, index - 1);
+              },
+            );
+          },
+        );
 }
 
 @immutable
 class HeaderData {
-
   ///Header Widget that will be stretched, it will appear at the top of the page
   final Widget header;
 
@@ -140,14 +139,12 @@ class HeaderData {
     this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
     this.blurColor,
     this.backgroundColor,
-  })
-      : assert(header != null),
+  })  : assert(header != null),
         assert(headerHeight != null && headerHeight >= 0.0),
         assert(highlightHeaderAlignment != null);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
-
   ///Header parameters describing how the header will be displayed
   final HeaderData headerData;
 
@@ -160,8 +157,7 @@ class StretchyHeaderBase extends StatefulWidget {
     Key key,
     @required this.headerData,
     @required this.listBuilder,
-  })
-      : assert(headerData != null),
+  })  : assert(headerData != null),
         assert(listBuilder != null),
         super(key: key);
 
@@ -170,12 +166,12 @@ class StretchyHeaderBase extends StatefulWidget {
 }
 
 typedef HeaderListViewBuilder = ListView Function(
-    BuildContext context,
-    ScrollController controller,
-    EdgeInsets padding,
-    ScrollPhysics physics,
-    Widget topWidget,
-    );
+  BuildContext context,
+  ScrollController controller,
+  EdgeInsets padding,
+  ScrollPhysics physics,
+  Widget topWidget,
+);
 
 class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   ScrollController _scrollController;
@@ -186,7 +182,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
 
   void _onLayoutDone(_) {
     final RenderBox renderBox =
-    _keyHighlightHeader.currentContext.findRenderObject();
+        _keyHighlightHeader.currentContext.findRenderObject();
     setState(() {
       _highlightHeaderSize = renderBox.size.height;
     });
@@ -205,7 +201,8 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   @override
   Widget build(BuildContext context) {
     double highlightPosition = 0.0;
-    if (widget.headerData.highlightHeaderAlignment == HighlightHeaderAlignment.top) {
+    if (widget.headerData.highlightHeaderAlignment ==
+        HighlightHeaderAlignment.top) {
       highlightPosition = (_offset >= 0.0 ? -_offset : 0.0);
     } else if (widget.headerData.highlightHeaderAlignment ==
         HighlightHeaderAlignment.center) {
@@ -226,7 +223,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
               child: widget.headerData.header,
             ),
             height: _scrollController.hasClients &&
-                _scrollController.position.extentAfter == 0.0
+                    _scrollController.position.extentAfter == 0.0
                 ? _headerSize
                 : _offset <= _headerSize ? _headerSize - _offset : 0.0,
             width: MediaQuery.of(context).size.width,
@@ -234,20 +231,21 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
           IgnorePointer(
             child: widget.headerData.blurContent
                 ? ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                    sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
-                    sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
-                child: Container(
-                  height: _offset <= _headerSize
-                      ? _headerSize - _offset
-                      : 0.0,
-                  decoration: BoxDecoration(
-                      color: (widget.headerData.blurColor ?? Colors.grey.shade200)
-                          .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
-                ),
-              ),
-            )
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
+                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
+                      child: Container(
+                        height: _offset <= _headerSize
+                            ? _headerSize - _offset
+                            : 0.0,
+                        decoration: BoxDecoration(
+                            color: (widget.headerData.blurColor ??
+                                    Colors.grey.shade200)
+                                .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
+                      ),
+                    ),
+                  )
                 : SizedBox.shrink(),
           ),
           NotificationListener<ScrollNotification>(
@@ -269,10 +267,10 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
           ),
           widget.headerData.highlightHeader != null
               ? Positioned(
-            key: _keyHighlightHeader,
-            top: highlightPosition,
-            child: widget.headerData.highlightHeader,
-          )
+                  key: _keyHighlightHeader,
+                  top: highlightPosition,
+                  child: widget.headerData.highlightHeader,
+                )
               : SizedBox.shrink(),
         ],
       ),
