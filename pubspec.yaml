@@ -1,6 +1,6 @@
 name: stretchy_header
 description: This package allows us to create a elastic header, to give a good effect when you scroll down the widget.
-version: 1.0.5
+version: 1.0.6
 author: Diego Velásquez <diegoveloper@gmail.com>
 homepage: https://github.com/diegoveloper/flutter_stretchy_header/
 
