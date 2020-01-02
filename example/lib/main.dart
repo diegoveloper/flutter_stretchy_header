@@ -121,21 +121,25 @@ class SampleCustomHeader extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Material(
               color: Colors.transparent,
-              child: InkResponse(
-                onTap: () {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('onTap'),
+              child: Builder(
+                builder: (newContext) {
+                  return InkResponse(
+                    onTap: () {
+                      Scaffold.of(newContext).showSnackBar(
+                        SnackBar(
+                          content: Text('onTap'),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Icon(
+                        Icons.fullscreen,
+                        color: Colors.white,
+                      ),
                     ),
                   );
                 },
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Icon(
-                    Icons.fullscreen,
-                    color: Colors.white,
-                  ),
-                ),
               ),
             ),
           ),
@@ -168,16 +172,16 @@ class SampleBottomLabel extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black54,
-                    Colors.black54,
-                    Colors.black26,
-                    Colors.black12,
-                    Colors.black12,
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                )),
+              colors: [
+                Colors.black54,
+                Colors.black54,
+                Colors.black26,
+                Colors.black12,
+                Colors.black12,
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            )),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Text(

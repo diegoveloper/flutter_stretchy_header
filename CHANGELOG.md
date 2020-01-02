@@ -1,3 +1,7 @@
+## [1.0.7]
+
+Bugs fixed
+
 ## [1.0.6]
 
 Add `overlay` widget to header.
