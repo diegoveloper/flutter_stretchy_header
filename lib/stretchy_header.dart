@@ -280,7 +280,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
           ),
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              if (notification is ScrollUpdateNotification) {
+              if (notification is ScrollUpdateNotification && notification.metrics.axis == Axis.vertical) {
                 setState(() {
                   _offset = notification.metrics.pixels;
                 });
