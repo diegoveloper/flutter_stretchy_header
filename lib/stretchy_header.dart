@@ -44,11 +44,15 @@ class StretchyHeader extends StretchyHeaderBase {
     Key key,
     @required HeaderData headerData,
     @required Widget child,
+    double displacement,
+    VoidCallback onRefresh,
   })  : assert(headerData != null),
         assert(child != null),
         super(
           key: key,
           headerData: headerData,
+          displacement: displacement,
+          onRefresh: onRefresh,
           listBuilder: (context, controller, padding, physics, topWidget) {
             return ListView(
               controller: controller,
@@ -66,11 +70,15 @@ class StretchyHeader extends StretchyHeaderBase {
     Key key,
     @required HeaderData headerData,
     @required List<Widget> children,
+    double displacement,
+    VoidCallback onRefresh,
   })  : assert(headerData != null),
         assert(children != null),
         super(
           key: key,
           headerData: headerData,
+          displacement: displacement,
+          onRefresh: onRefresh,
           listBuilder: (context, controller, padding, physics, topWidget) {
             return ListView(
               controller: controller,
@@ -85,12 +93,16 @@ class StretchyHeader extends StretchyHeaderBase {
     Key key,
     @required HeaderData headerData,
     @required IndexedWidgetBuilder itemBuilder,
+    double displacement,
+    VoidCallback onRefresh,
     int itemCount,
   })  : assert(headerData != null),
         assert(itemBuilder != null),
         super(
           key: key,
           headerData: headerData,
+          displacement: displacement,
+          onRefresh: onRefresh,
           listBuilder: (context, controller, padding, physics, topWidget) {
             return ListView.builder(
               controller: controller,
@@ -183,11 +195,23 @@ class StretchyHeaderBase extends StatefulWidget {
   ///and make provided topWidget its first child
   final HeaderListViewBuilder listBuilder;
 
+  /// The distance from the child's top or bottom edge to where the refresh
+  /// indicator will settle. During the drag that exposes the refresh indicator,
+  /// its actual displacement may significantly exceed this value.
+  final double displacement;
+
+  /// A function that's called when the user has dragged the stretechy header
+  /// far enough to demonstrate that they want the app to refresh.
+  final VoidCallback onRefresh;
+
   const StretchyHeaderBase({
     Key key,
     @required this.headerData,
     @required this.listBuilder,
-  })  : assert(headerData != null),
+    double displacement,
+    this.onRefresh,
+  })  : this.displacement = displacement ?? 40.0,
+        assert(headerData != null),
         assert(listBuilder != null),
         super(key: key);
 
@@ -209,6 +233,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   double _offset = 0.0;
   double _headerSize = 0.0;
   double _highlightHeaderSize = 0.0;
+  bool canTriggerRefresh = true;
 
   void _onLayoutDone(_) {
     final RenderBox renderBox =
@@ -280,7 +305,18 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
           ),
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              if (notification is ScrollUpdateNotification && notification.metrics.axis == Axis.vertical) {
+              if (widget.onRefresh != null) {
+                final currentDisplacement = notification.metrics.pixels.abs();
+                if (currentDisplacement <= 0) {
+                  canTriggerRefresh = true;
+                } else if (currentDisplacement >= widget.displacement &&
+                    canTriggerRefresh) {
+                  widget.onRefresh();
+                  canTriggerRefresh = false;
+                }
+              }
+              if (notification is ScrollUpdateNotification &&
+                  notification.metrics.axis == Axis.vertical) {
                 setState(() {
                   _offset = notification.metrics.pixels;
                 });

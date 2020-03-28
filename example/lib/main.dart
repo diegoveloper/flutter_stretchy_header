@@ -42,7 +42,7 @@ class Samples extends StatelessWidget {
                   builder: (context) => SampleCustomHeader(),
                 ));
               },
-              child: Text("Cutom header"),
+              child: Text("Custom header"),
               color: Colors.red,
             ),
             MaterialButton(
@@ -61,6 +61,15 @@ class Samples extends StatelessWidget {
                 ));
               },
               child: Text("Center widget"),
+              color: Colors.red,
+            ),
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SampleRefreshIndicator(),
+                ));
+              },
+              child: Text("Refresh Indicator"),
               color: Colors.red,
             ),
           ],
@@ -229,6 +238,79 @@ class SampleCenterWidget extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Text(LONG_DESCRIPTION),
         ),
+      ),
+    );
+  }
+}
+
+class SampleRefreshIndicator extends StatefulWidget {
+  @override
+  _SampleRefreshIndicatorState createState() => _SampleRefreshIndicatorState();
+}
+
+class _SampleRefreshIndicatorState extends State<SampleRefreshIndicator> {
+  bool isLoading = false;
+  bool numbers = true;
+
+  void _loadFakeData() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    await Future.delayed(Duration(seconds: 3));
+    numbers = !numbers;
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          StretchyHeader.listViewBuilder(
+            onRefresh: () {
+              _loadFakeData();
+            },
+            headerData: HeaderData(
+              headerHeight: 250,
+              header: Image.asset(
+                "images/machu.jpg",
+                fit: BoxFit.cover,
+              ),
+            ),
+            itemCount: 15,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: numbers
+                    ? Text("item $index")
+                    : Container(
+                        height: 10,
+                        width: 10,
+                        color:
+                            Colors.primaries[index % Colors.primaries.length],
+                      ),
+                onTap: () {
+                  final snackBar = SnackBar(
+                    content: Text('item $index tapped'),
+                  );
+                  Scaffold.of(context).showSnackBar(snackBar);
+                },
+              );
+            },
+          ),
+          if (isLoading) _buildLoadingWidget()
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingWidget() {
+    return Container(
+      color: Colors.black54,
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

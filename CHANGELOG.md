@@ -1,3 +1,8 @@
+## [1.0.8]
+
+- `onRefresh` callback was added , it works similar like the `RefreshIndicator` widget.
+- `displacement` property was added, default value is `40`. if `onRefresh` is null then this property is ignored.
+
 ## [1.0.7]
 
 Bugs fixed

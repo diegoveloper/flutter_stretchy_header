@@ -29,7 +29,7 @@ Sample 3
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  stretchy_header: "^1.0.6"
+  stretchy_header: "^1.0.8"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.
