@@ -306,10 +306,10 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
           NotificationListener<ScrollNotification>(
             onNotification: (notification) {
               if (widget.onRefresh != null) {
-                final currentDisplacement = notification.metrics.pixels.abs();
-                if (currentDisplacement <= 0) {
+                final currentDisplacement = notification.metrics.pixels;
+                if (currentDisplacement >= 0) {
                   canTriggerRefresh = true;
-                } else if (currentDisplacement >= widget.displacement &&
+                } else if (currentDisplacement <= -widget.displacement &&
                     canTriggerRefresh) {
                   widget.onRefresh();
                   canTriggerRefresh = false;
