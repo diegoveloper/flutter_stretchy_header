@@ -9,37 +9,6 @@ enum HighlightHeaderAlignment {
 }
 
 class StretchyHeader extends StretchyHeaderBase {
-  @Deprecated(
-      'Use StretchyHeader.singleChild instead. If body contains ListView, use StretchyHeader.listView or StretchyHeader.listViewBuilder.')
-  factory StretchyHeader({
-    Key key,
-    @required Widget header,
-    @required double headerHeight,
-    @required Widget body,
-
-    ///Body Widget that will appear below the header
-    Widget highlightHeader,
-    bool blurContent = true,
-    HighlightHeaderAlignment highlightHeaderAlignment =
-        HighlightHeaderAlignment.bottom,
-    Color blurColor,
-    Color backgroundColor,
-  }) {
-    return StretchyHeader.singleChild(
-      key: key,
-      headerData: HeaderData(
-        header: header,
-        headerHeight: headerHeight,
-        highlightHeader: highlightHeader,
-        blurContent: blurContent,
-        highlightHeaderAlignment: highlightHeaderAlignment,
-        blurColor: blurColor,
-        backgroundColor: backgroundColor,
-      ),
-      child: AbsorbPointer(child: body),
-    );
-  }
-
   StretchyHeader.singleChild({
     Key key,
     @required HeaderData headerData,
@@ -241,6 +210,14 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
     setState(() {
       _highlightHeaderSize = renderBox.size.height;
     });
+  }
+
+  @override
+  void didUpdateWidget(StretchyHeaderBase oldWidget) {
+    if (widget.headerData.highlightHeader != null) {
+      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

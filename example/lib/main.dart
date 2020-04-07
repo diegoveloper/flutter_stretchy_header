@@ -172,6 +172,7 @@ class SampleBottomLabel extends StatelessWidget {
       body: StretchyHeader.singleChild(
         headerData: HeaderData(
           headerHeight: 250,
+          blurContent: false,
           header: Image.asset(
             "images/machu.jpg",
             fit: BoxFit.cover,
@@ -179,20 +180,18 @@ class SampleBottomLabel extends StatelessWidget {
           highlightHeaderAlignment: HighlightHeaderAlignment.bottom,
           highlightHeader: Container(
             width: MediaQuery.of(context).size.width,
+            alignment: Alignment.center,
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-              colors: [
-                Colors.black54,
-                Colors.black54,
-                Colors.black26,
-                Colors.black12,
-                Colors.black12,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black38,
+                  blurRadius: 5,
+                  spreadRadius: 5,
+                )
               ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            )),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(20.0),
               child: Text(
                 "Machu Picchu",
                 style: TextStyle(color: Colors.white, fontSize: 22),
