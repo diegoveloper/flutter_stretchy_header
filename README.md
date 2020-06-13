@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/stretchy_header.svg)](https://pub.dartlang.org/packages/stretchy_header)
 
-This package allows us to create a elastic header, to give a good effect when you scroll down the widget.
+This package allows us to create an elastic header, to give a good effect when you scroll down the widget.
 
 Sample 1
 
@@ -17,12 +17,6 @@ Sample 2
   <img width="300" height="600" src="https://media.giphy.com/media/f9SzoZKqo1vfdlCaT5/giphy.gif">
 </p>
 
-Sample 3
-
-<p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif">
-  <br>https://media.giphy.com/media/1NUOenNf2oKU3YuWb1/giphy.gif
-</p>
 
 ## Getting started
 
