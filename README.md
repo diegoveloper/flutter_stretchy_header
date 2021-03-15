@@ -66,7 +66,7 @@ class SampleListView extends StatelessWidget {
               final snackBar = SnackBar(
                 content: Text('item $index tapped'),
               );
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           );
         },
@@ -106,7 +106,7 @@ class SampleCustomHeader extends StatelessWidget {
               color: Colors.transparent,
               child: InkResponse(
                 onTap: () {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('onTap'),
                     ),
