@@ -257,8 +257,8 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                 ? ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(
-                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
-                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
+                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.1,
+                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.1),
                       child: Container(
                         height: _offset <= _headerSize
                             ? _headerSize - _offset
