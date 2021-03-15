@@ -99,7 +99,7 @@ class SampleListView extends StatelessWidget {
               final snackBar = SnackBar(
                 content: Text('item $index tapped'),
               );
-              Scaffold.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           );
         },
@@ -134,7 +134,7 @@ class SampleCustomHeader extends StatelessWidget {
                 builder: (newContext) {
                   return InkResponse(
                     onTap: () {
-                      Scaffold.of(newContext).showSnackBar(
+                      ScaffoldMessenger.of(newContext).showSnackBar(
                         SnackBar(
                           content: Text('onTap'),
                         ),
@@ -294,7 +294,7 @@ class _SampleRefreshIndicatorState extends State<SampleRefreshIndicator> {
                   final snackBar = SnackBar(
                     content: Text('item $index tapped'),
                   );
-                  Scaffold.of(context).showSnackBar(snackBar);
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 },
               );
             },

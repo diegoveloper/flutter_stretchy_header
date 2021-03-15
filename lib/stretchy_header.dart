@@ -10,14 +10,12 @@ enum HighlightHeaderAlignment {
 
 class StretchyHeader extends StretchyHeaderBase {
   StretchyHeader.singleChild({
-    Key key,
-    @required HeaderData headerData,
-    @required Widget child,
-    double displacement,
-    VoidCallback onRefresh,
-  })  : assert(headerData != null),
-        assert(child != null),
-        super(
+    Key? key,
+    required HeaderData headerData,
+    required Widget child,
+    double? displacement,
+    VoidCallback? onRefresh,
+  }) : super(
           key: key,
           headerData: headerData,
           displacement: displacement,
@@ -36,14 +34,12 @@ class StretchyHeader extends StretchyHeaderBase {
         );
 
   StretchyHeader.listView({
-    Key key,
-    @required HeaderData headerData,
-    @required List<Widget> children,
-    double displacement,
-    VoidCallback onRefresh,
-  })  : assert(headerData != null),
-        assert(children != null),
-        super(
+    Key? key,
+    required HeaderData headerData,
+    required List<Widget> children,
+    double? displacement,
+    VoidCallback? onRefresh,
+  }) : super(
           key: key,
           headerData: headerData,
           displacement: displacement,
@@ -59,15 +55,13 @@ class StretchyHeader extends StretchyHeaderBase {
         );
 
   StretchyHeader.listViewBuilder({
-    Key key,
-    @required HeaderData headerData,
-    @required IndexedWidgetBuilder itemBuilder,
-    double displacement,
-    VoidCallback onRefresh,
-    int itemCount,
-  })  : assert(headerData != null),
-        assert(itemBuilder != null),
-        super(
+    Key? key,
+    required HeaderData headerData,
+    required IndexedWidgetBuilder itemBuilder,
+    double? displacement,
+    VoidCallback? onRefresh,
+    int? itemCount,
+  }) : super(
           key: key,
           headerData: headerData,
           displacement: displacement,
@@ -98,7 +92,7 @@ class HeaderData {
   final double headerHeight;
 
   ///highlight header that will be placed on the header,  this widget always be visible without blurring effect
-  final Widget highlightHeader;
+  final Widget? highlightHeader;
 
   ///alignment for the highlight header
   final HighlightHeaderAlignment highlightHeaderAlignment;
@@ -114,7 +108,7 @@ class HeaderData {
   //    color: Colors.transparent,
   //    child: InkResponse(
   //      onTap: () {
-  //        Scaffold.of(context).showSnackBar(
+  //        ScaffoldMessenger.of(context).showSnackBar(
   //          SnackBar(
   //            content: Text('onTap'),
   //          ),
@@ -130,29 +124,27 @@ class HeaderData {
   //    ),
   //  ),
   //)
-  final Widget overlay;
+  final Widget? overlay;
 
   ///The color of the blur, white by default
-  final Color blurColor;
+  final Color? blurColor;
 
   ///Background Color of all of the content
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   ///If you want to blur the content when scroll. True by default
   final bool blurContent;
 
   const HeaderData({
-    @required this.header,
-    @required this.headerHeight,
+    required this.header,
+    required this.headerHeight,
     this.highlightHeader,
     this.blurContent = true,
     this.highlightHeaderAlignment = HighlightHeaderAlignment.bottom,
     this.overlay,
     this.blurColor,
     this.backgroundColor,
-  })  : assert(header != null),
-        assert(headerHeight != null && headerHeight >= 0.0),
-        assert(highlightHeaderAlignment != null);
+  }) : assert(headerHeight != null && headerHeight >= 0.0);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
@@ -171,17 +163,15 @@ class StretchyHeaderBase extends StatefulWidget {
 
   /// A function that's called when the user has dragged the stretechy header
   /// far enough to demonstrate that they want the app to refresh.
-  final VoidCallback onRefresh;
+  final VoidCallback? onRefresh;
 
   const StretchyHeaderBase({
-    Key key,
-    @required this.headerData,
-    @required this.listBuilder,
-    double displacement,
+    Key? key,
+    required this.headerData,
+    required this.listBuilder,
+    double? displacement,
     this.onRefresh,
   })  : this.displacement = displacement ?? 40.0,
-        assert(headerData != null),
-        assert(listBuilder != null),
         super(key: key);
 
   @override
@@ -190,14 +180,14 @@ class StretchyHeaderBase extends StatefulWidget {
 
 typedef HeaderListViewBuilder = ListView Function(
   BuildContext context,
-  ScrollController controller,
+  ScrollController? controller,
   EdgeInsets padding,
   ScrollPhysics physics,
   Widget topWidget,
 );
 
 class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
   GlobalKey _keyHighlightHeader = GlobalKey();
   double _offset = 0.0;
   double _headerSize = 0.0;
@@ -205,17 +195,17 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   bool canTriggerRefresh = true;
 
   void _onLayoutDone(_) {
-    final RenderBox renderBox =
-        _keyHighlightHeader.currentContext.findRenderObject();
+    final RenderBox? renderBox =
+        _keyHighlightHeader.currentContext!.findRenderObject() as RenderBox?;
     setState(() {
-      _highlightHeaderSize = renderBox.size.height;
+      _highlightHeaderSize = renderBox!.size.height;
     });
   }
 
   @override
   void didUpdateWidget(StretchyHeaderBase oldWidget) {
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -225,7 +215,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
     _scrollController = ScrollController();
     _headerSize = widget.headerData.headerHeight;
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
     }
     super.initState();
   }
@@ -254,10 +244,12 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
               clipper: HeaderClipper(_headerSize - _offset),
               child: widget.headerData.header,
             ),
-            height: _scrollController.hasClients &&
-                    _scrollController.position.extentAfter == 0.0
+            height: _scrollController!.hasClients &&
+                    _scrollController!.position.extentAfter == 0.0
                 ? _headerSize
-                : _offset <= _headerSize ? _headerSize - _offset : 0.0,
+                : _offset <= _headerSize
+                    ? _headerSize - _offset
+                    : 0.0,
             width: MediaQuery.of(context).size.width,
           ),
           IgnorePointer(
@@ -265,8 +257,8 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                 ? ClipRect(
                     child: BackdropFilter(
                       filter: ImageFilter.blur(
-                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0,
-                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.0),
+                          sigmaX: _offset < 0.0 ? _offset.abs() * 0.1 : 0.1,
+                          sigmaY: _offset < 0.0 ? _offset.abs() * 0.1 : 0.1),
                       child: Container(
                         height: _offset <= _headerSize
                             ? _headerSize - _offset
@@ -288,7 +280,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                   canTriggerRefresh = true;
                 } else if (currentDisplacement <= -widget.displacement &&
                     canTriggerRefresh) {
-                  widget.onRefresh();
+                  widget.onRefresh!();
                   canTriggerRefresh = false;
                 }
               }
@@ -315,7 +307,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
               ? Positioned(
                   key: _keyHighlightHeader,
                   top: highlightPosition,
-                  child: widget.headerData.highlightHeader,
+                  child: widget.headerData.highlightHeader!,
                 )
               : SizedBox.shrink(),
         ],
