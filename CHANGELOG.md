@@ -1,3 +1,7 @@
+## [2.0.0]
+
+- Null safety support. Thanks @cerberodev.
+
 ## [1.0.8]
 
 - `onRefresh` callback was added , it works similar like the `RefreshIndicator` widget.
