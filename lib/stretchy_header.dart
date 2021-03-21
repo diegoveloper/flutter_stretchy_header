@@ -144,7 +144,7 @@ class HeaderData {
     this.overlay,
     this.blurColor,
     this.backgroundColor,
-  }) : assert(headerHeight != null && headerHeight >= 0.0);
+  }) : assert(headerHeight >= 0.0);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
@@ -247,7 +247,9 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
             height: _scrollController!.hasClients &&
                     _scrollController!.position.extentAfter == 0.0
                 ? _headerSize
-                : _offset <= _headerSize ? _headerSize - _offset : 0.0,
+                : _offset <= _headerSize
+                    ? _headerSize - _offset
+                    : 0.0,
             width: MediaQuery.of(context).size.width,
           ),
           IgnorePointer(
