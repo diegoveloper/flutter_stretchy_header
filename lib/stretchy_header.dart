@@ -144,7 +144,7 @@ class HeaderData {
     this.overlay,
     this.blurColor,
     this.backgroundColor,
-  }) : assert(headerHeight != null && headerHeight >= 0.0);
+  }) : assert(headerHeight >= 0.0);
 }
 
 class StretchyHeaderBase extends StatefulWidget {
