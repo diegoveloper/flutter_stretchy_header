@@ -161,7 +161,7 @@ class StretchyHeaderBase extends StatefulWidget {
   /// its actual displacement may significantly exceed this value.
   final double displacement;
 
-  /// A function that's called when the user has dragged the stretechy header
+  /// A function that's called when the user has dragged the stretchy header
   /// far enough to demonstrate that they want the app to refresh.
   final VoidCallback? onRefresh;
 
@@ -205,7 +205,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
   @override
   void didUpdateWidget(StretchyHeaderBase oldWidget) {
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -215,7 +215,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
     _scrollController = ScrollController();
     _headerSize = widget.headerData.headerHeight;
     if (widget.headerData.highlightHeader != null) {
-      WidgetsBinding.instance!.addPostFrameCallback(_onLayoutDone);
+      WidgetsBinding.instance.addPostFrameCallback(_onLayoutDone);
     }
     super.initState();
   }
@@ -250,7 +250,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                 : _offset <= _headerSize
                     ? _headerSize - _offset
                     : 0.0,
-            width: MediaQuery.of(context).size.width,
+            width: double.maxFinite,
           ),
           IgnorePointer(
             child: widget.headerData.blurContent
