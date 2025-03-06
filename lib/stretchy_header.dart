@@ -266,7 +266,7 @@ class _StretchyHeaderBaseState extends State<StretchyHeaderBase> {
                         decoration: BoxDecoration(
                             color: (widget.headerData.blurColor ??
                                     Colors.grey.shade200)
-                                .withOpacity(_offset < 0.0 ? 0.15 : 0.0)),
+                                .withValues(alpha: _offset < 0.0 ? 0.15 : 0.0)),
                       ),
                     ),
                   )
